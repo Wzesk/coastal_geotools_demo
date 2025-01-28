@@ -310,7 +310,7 @@ class boundary_refine:
           if int(pt[0]/scale_down) < image_array.shape[1] and int(pt[1]/scale_down) < image_array.shape[0]:
             t_samples.append([pt[0],pt[1],image_array[int(pt[1]/scale_down),int(pt[0]/scale_down)]])
           else:
-            print("sample out of bounds")
+            #print("sample out of bounds")
             min_pixel = np.min(image_array.reshape(image_array.shape[0]*image_array.shape[1],image_array.shape[2]),axis=0)
             t_samples.append([pt[0],pt[1],min_pixel])
         except Exception as e:
@@ -361,7 +361,7 @@ class boundary_refine:
 
     return refined_boundary_pts,segmentation_transects
 
-  def visualize_results(self,draw_image=False,draw_sampling=False):
+  def visualize_results(self,draw_image=False,draw_sampling=False,title="Derived Shoreline Refinement"):
     """Visualize the results of the boundary refinement.
 
     Parameters
@@ -370,11 +370,18 @@ class boundary_refine:
         Whether to draw the original image, by default False.
     draw_sampling : bool, optional
         Whether to draw the sampled NIR values, by default False.
+    title : string, optional
+        set a useful title for the plot.
     """
 
     with load_theme("gruvbox_dark"):
       plt.axis('equal')
       plt.gca().invert_yaxis()
+      plt.xticks([])
+      plt.yticks([])
+      plt.title(title)
+
+
 
       self.sample_image
       if draw_image:
@@ -397,11 +404,16 @@ class boundary_refine:
     """
     Visualize the clustering results
     """
+    plt.axis('equal')
+    plt.title("Clustered samples")
+    plt.xlabel("Shore Normal Position")
+    plt.ylabel("Normalized NIR reflectance")
+
     if self.clustered_samples is not None:
       with load_theme("gruvbox_dark"):
         plt.axis('equal')
       
-        for test_pts in self.clustered_samples:
+        for test_pts in self.clustered_samples[bounds]:
           plt.scatter(test_pts[:,0], test_pts[:,1], c=test_pts[:,2])
         plt.show()
 
@@ -409,14 +421,21 @@ class boundary_refine:
     """
     Visualize location of shoreline derivative
     """
+    plt.axis('equal')
+    plt.title("Max Slopes")
+    plt.xlabel("Shore Normal Position")
+    plt.ylabel("Normalized NIR reflectance")
+
     if self.clustered_samples is not None:
       with load_theme("gruvbox_dark"):
         plt.axis('equal')
-
-        for test_pts in self.clustered_samples:
+        colors = plt.cm.viridis(np.linspace(0, 1, len(self.clustered_samples[bounds])))
+        i=0
+        for test_pts in self.clustered_samples[bounds]:
           dirs = self.find_highest_derivatives(test_pts)
-          plt.scatter(test_pts[:,0], test_pts[:,1], c='grey')
-          plt.scatter(dirs[:,1],dirs[:,2],c='red')
+          plt.plot(test_pts[:,0], test_pts[:,1],c=colors[i])
+          #plt.scatter(dirs[:,1],dirs[:,2],c='red')
+          i+=1
         plt.show()
 
   def rolling_highest_slope(self, seg_slopes, segmentation_transects,wz=3):

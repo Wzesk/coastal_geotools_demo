@@ -1,9 +1,8 @@
-<div align="center">
-  <h2>Littoral Shoreline Refinement</h2>
-  <a target="_blank" href="https://colab.research.google.com/github/Wzesk/coastal_geotools_demo/blob/main/sample_shoreline_refinement.ipynb">
-    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-  </a>
-</div>
+# Littoral Shoreline Refinement
+<a target="_blank" href="https://colab.research.google.com/github/Wzesk/coastal_geotools_demo/blob/main/sample_shoreline_refinement.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
+
 
 ## Overview
 

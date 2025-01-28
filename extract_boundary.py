@@ -77,7 +77,10 @@ def get_shoreline(mask_img_path, simplification=1, smoothing=3,periodic=True):
 
     # Append the first point to the end of the smoothed shoreline to close the loop
     smoothed_shoreline = np.vstack((smoothed_shoreline,smoothed_shoreline[0,:]))
-  
+  else:
+    # Remove the first and last points from the smoothed shoreline -- these tend to create edges along the image edge
+    smoothed_shoreline = smoothed_shoreline[1:-1,:]
+    
   #switch the x and y coordinates
   smoothed_shoreline = np.array([smoothed_shoreline[:,1],smoothed_shoreline[:,0]]).T
 
