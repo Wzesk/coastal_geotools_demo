@@ -7,12 +7,7 @@
 
 ## Overview
 
-This module refines approximate/coarse shorelines, typically extracted through image segmentation. It is one step in a larger, modular shoreline extraction pipeline.
-
-1. Downloading S2 imagery for specified coastal regions
-2. Filtering images based on cloud coverage
-3. Storing imagery efficiently in TAR archives
-4. Tracking download progress and site status
+This module refines approximate/coarse shorelines, typically extracted through image segmentation. It is one step in a larger, modular shoreline extraction pipeline. 
 
 ### Core Files
 
